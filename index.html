@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Sisuu Reflection Bot&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-family: Arial, sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>max-width: 600px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin: 0 auto;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>#chat {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: 1px solid #ccc;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>height: 400px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>overflow-y: auto;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: #f9f9f9;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.user { text-align: right; font-weight: bold; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.bot { text-align: left; color: #333; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>input, button {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: calc(100% - 90px);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-right: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;h2&gt;Sisuu: Role Reflection Coach&lt;/h2&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="chat"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="bot"&gt;👋 Welcome! Let’s define your role together. Click Send to begin.&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;input type="text" id="input" placeholder="Type your response..." /&gt;</p>
+<p class="p1">&lt;button onclick="send()"&gt;Send&lt;/button&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const chat = document.getElementById('chat');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const input = document.getElementById('input');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const userId = "demo_user"; // for now, fixed</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>async function send() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const message = input.value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!message) return;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const userDiv = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>userDiv.className = 'user';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>userDiv.textContent = `You: ${message}`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>chat.appendChild(userDiv);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>input.value = '';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>chat.scrollTop = chat.scrollHeight;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const res = await fetch('/chat', {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>method: 'POST',</p>
+<p class="p1"><span class="Apple-converted-space">      </span>headers: { 'Content-Type': 'application/json' },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>body: JSON.stringify({ user_id: userId, message })</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const data = await res.json();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const botDiv = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>botDiv.className = 'bot';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>botDiv.textContent = `Sisuu: ${data.response}`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>chat.appendChild(botDiv);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>chat.scrollTop = chat.scrollHeight;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
