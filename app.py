@@ -1,5 +1,3 @@
-# This refactored app.py version removes Slack dependencies and adds a web-based interface endpoint
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
@@ -14,10 +12,12 @@ logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__)
 CORS(app)
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY")
 supabase = create_client(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+def get_openai_client():
+    return OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 QUESTIONS = [
     "What's the job title, and what are the core responsibilities in plain English?",
@@ -75,6 +75,8 @@ Here’s the manager’s input:
 @app.route("/chat", methods=["POST"])
 def chat():
     try:
+        client = get_openai_client()  # Initialize inside the route
+
         data = request.get_json()
         user_id = data.get("user_id")
         message = data.get("message")
@@ -130,3 +132,4 @@ def root():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
+
